@@ -74,7 +74,7 @@ router.get('/getByDate/:date', (req, res, next) => {
     res.header("Access-Control-Allow-Origin","*");
     res.header("Access-Control_Allow-Headers","Origin,X-Requested-With,Content-Type,Accept");
 
-    const functionName = `fn_get_by_date('${req.params.date}')`;
+    const functionName = `fn_get_by_date(${req.params.date})`;
 
         postgres.callFnWithResultsById(functionName)  
             .then((data) => {

@@ -174,7 +174,6 @@ router.patch('/logout', (req, res, next) => {
     res.header("Access-Control-Allow-Origin","*");
     res.header("Access-Control_Allow-Headers","Origin,X-Requested-With,Content-Type,Accept");
 
-    debugger;
     return new Promise((resolve, reject) => {
         let placeholder = '';
         let count = 1;
@@ -219,50 +218,28 @@ router.patch('/logout', (req, res, next) => {
 });
 
 //POST A NEW CLOCK==================================================================================
-router.post('/addNewClock', (req, res, next) => {
+router.post('/addNewClock/:empno', (req, res, next) => {
     res.header("Access-Control-Allow-Origin","*");
     res.header("Access-Control_Allow-Headers","Origin,X-Requested-With,Content-Type,Accept");
 
-    debugger;
-    return new Promise((resolve, reject) => {
-        let placeholder = '';
-        let count = 1;
-        const params = Object.keys(req.body).map(key => [(key), req.body[key]]);
+    const functionName = `fn_add_new_clock_in(${req.params.empno})`;
 
-        const paramsValues = Object.keys(req.body).map(key => req.body[key]);
-
-        if (Array.isArray(params)) {
-            params.forEach(() => {
-                placeholder += `$${count},`;
-                count += 1;
-            });
-        } 
-
-        placeholder = placeholder.replace(/,\s*$/, ''); 
-
-        const functionName = `fn_add_new_clock_in`;
-
-        const sql = `${functionName}(${placeholder})`;
-
-        postgres.callFnWithResultsAdd(sql, paramsValues)
-        .then((data) => {
+        postgres.callFnWithResultsById(functionName)  
+            .then((data) => {
+                res.status(200).json({
+                    message: 'Employee s clock',
+                    employee: data,
+                    status: true
+                });
+            })
+            .catch((error => {
             debugger;
-            res.status(201).json({
-                message: 'Successfully a clock',
-                addedUser: data
-            });
-            resolve(data);
-
-        })
-        .catch((error) => {
-            debugger;
-            res.status(500).json({
-                message: 'bad Request',
-                error: error,
-                status: false
-            });
-            reject(error);
-        })
-    })
+                console.log(error);
+                res.status(500).json({
+                    message: 'bad Request',
+                    error: error,
+                    status: false
+                });
+            }))
 });
 module.exports = router;

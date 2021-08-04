@@ -18,6 +18,8 @@ router.get('/getByEmail/:email', (req, res, next) => {
     
     res.setHeader("Access-Control-Allow-Origin","*");
     res.setHeader("Access-Control_Allow-Headers","Origin,X-Requested-With,Content-Type,Accept");
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
 
     const functionName = `fn_get_by_email('${req.params.email}')`;
 

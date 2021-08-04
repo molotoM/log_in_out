@@ -16,8 +16,8 @@ router.get('/allemp', (req, res) => res.send('Hello World!'))
 //GET CUSTOMER BY EMAIL===============================================================================
 router.get('/getByEmail/:email', (req, res, next) => {
     
-    res.header("Access-Control-Allow-Origin","*");
-    res.header("Access-Control_Allow-Headers","Origin,X-Requested-With,Content-Type,Accept");
+    res.setHeader("Access-Control-Allow-Origin","*");
+    res.setHeader("Access-Control_Allow-Headers","Origin,X-Requested-With,Content-Type,Accept");
 
     const functionName = `fn_get_by_email('${req.params.email}')`;
 
@@ -71,8 +71,8 @@ router.get('/allEmployees', (req, res,next) => {
 //GET CUSTOMER BY DATE===============================================================================
 router.get('/getByDate/:date', (req, res, next) => {
     
-    res.header("Access-Control-Allow-Origin","*");
-    res.header("Access-Control_Allow-Headers","Origin,X-Requested-With,Content-Type,Accept");
+    res.setHeader("Access-Control-Allow-Origin","*");
+    res.setHeader("Access-Control_Allow-Headers","Origin,X-Requested-With,Content-Type,Accept");
 
     const functionName = `fn_get_by_date(${req.params.date})`;
 
@@ -98,8 +98,8 @@ router.get('/getByDate/:date', (req, res, next) => {
 //GET CUSTOMER BY EMPLOYEE NUMBER===============================================================================
 router.get('/getByEmpNo/:empno', (req, res, next) => {
     
-    res.header("Access-Control-Allow-Origin","*");
-    res.header("Access-Control_Allow-Headers","Origin,X-Requested-With,Content-Type,Accept");
+    res.setHeader("Access-Control-Allow-Origin","*");
+    res.setHeader("Access-Control_Allow-Headers","Origin,X-Requested-With,Content-Type,Accept");
 
     const functionName = `fn_get_by_emp_no(${req.params.empno})`;
 
@@ -124,8 +124,8 @@ router.get('/getByEmpNo/:empno', (req, res, next) => {
 });
 //ADD A EMPLOYEE==============================================================================================
 router.post('/addEmployee/', (req, res, next) => {
-    res.header("Access-Control-Allow-Origin","*");
-    res.header("Access-Control_Allow-Headers","Origin,X-Requested-With,Content-Type,Accept");
+    res.setHeader("Access-Control-Allow-Origin","*");
+    res.setHeader("Access-Control_Allow-Headers","Origin,X-Requested-With,Content-Type,Accept");
 
     debugger;
     return new Promise((resolve, reject) => {
@@ -171,8 +171,8 @@ router.post('/addEmployee/', (req, res, next) => {
 });
 //LOG OUT=================================================================================
 router.patch('/logout', (req, res, next) => {
-    res.header("Access-Control-Allow-Origin","*");
-    res.header("Access-Control_Allow-Headers","Origin,X-Requested-With,Content-Type,Accept");
+    res.setHeader("Access-Control-Allow-Origin","*");
+    res.setHeader("Access-Control_Allow-Headers","Origin,X-Requested-With,Content-Type,Accept");
 
     return new Promise((resolve, reject) => {
         let placeholder = '';
@@ -219,8 +219,8 @@ router.patch('/logout', (req, res, next) => {
 
 //POST A NEW CLOCK==================================================================================
 router.post('/addNewClock/:empno', (req, res, next) => {
-    res.header("Access-Control-Allow-Origin","*");
-    res.header("Access-Control_Allow-Headers","Origin,X-Requested-With,Content-Type,Accept");
+    res.setHeader("Access-Control-Allow-Origin","*");
+    res.setHeader("Access-Control_Allow-Headers","Origin,X-Requested-With,Content-Type,Accept");
 
     const functionName = `fn_add_new_clock_in(${req.params.empno})`;
 

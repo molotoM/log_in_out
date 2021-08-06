@@ -177,7 +177,7 @@ router.patch('/logout/:clockno', (req, res, next) => {
     res.setHeader("Access-Control_Allow-Headers","Origin,X-Requested-With,Content-Type,Accept");
 
     
-    const functionName = `fn_get_by_emp_no(${req.params.clockno})`;
+    const functionName = `fn_add_new_clock_out(${req.params.clockno})`;
 
         postgres.callFnWithResultsById(functionName)  
             .then((data) => {

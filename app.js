@@ -13,7 +13,7 @@ var postgres = new Database()
 
 router.get('/allemp', (req, res) => res.send('Hello World!'))
 
-//GET CUSTOMER BY EMAIL===============================================================================
+//GET EMOPLOYEE BY EMAIL===============================================================================
 router.get('/getByEmail/:email', (req, res, next) => {
     
     res.setHeader("Access-Control-Allow-Origin","*");
@@ -70,7 +70,7 @@ router.get('/allEmployees', (req, res,next) => {
 
     })
 });
-//GET CUSTOMER BY DATE===============================================================================
+//GET EMPLOYEE BY DATE===============================================================================
 router.get('/getByDate/:date', (req, res, next) => {
     
     res.setHeader("Access-Control-Allow-Origin","*");
@@ -172,51 +172,30 @@ router.post('/addEmployee/', (req, res, next) => {
     })
 });
 //LOG OUT=================================================================================
-router.patch('/logout', (req, res, next) => {
+router.patch('/logout/:clockno', (req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin","*");
     res.setHeader("Access-Control_Allow-Headers","Origin,X-Requested-With,Content-Type,Accept");
 
-    return new Promise((resolve, reject) => {
-        let placeholder = '';
-        let count = 1;
-        const params = Object.keys(req.body).map(key => [(key), req.body[key]]);
+    
+    const functionName = `fn_get_by_emp_no(${req.params.clockno})`;
 
-        const paramsValues = Object.keys(req.body).map(key => req.body[key]);
-
-        if (Array.isArray(params)) {
-            params.forEach(() => {
-                placeholder += `$${count},`;
-                count += 1;
-            });
-        } 
-
-
-        placeholder = placeholder.replace(/,\s*$/, ''); 
-
-        const functionName = `fn_add_new_clock_out`;
-
-        const sql = `${functionName}(${placeholder})`;
-
-        postgres.callFnWithResultsAdd(sql, paramsValues)
-        .then((data) => {
+        postgres.callFnWithResultsById(functionName)  
+            .then((data) => {
+                res.status(200).json({
+                    message: 'Employee s clock',
+                    results: data,
+                    status: true
+                });
+            })
+            .catch((error => {
             debugger;
-            res.status(201).json({
-                message: 'Successfully Clocked Out',
-                addedUser: data
-            });
-            resolve(data);
-
-        })
-        .catch((error) => {
-            debugger;
-            res.status(500).json({
-                message: 'bad Request',
-                error: error,
-                status: false
-            });
-            reject(error);
-        })
-    })
+                console.log(error);
+                res.status(500).json({
+                    message: 'bad Request',
+                    error: error,
+                    status: false
+                });
+            }))
 });
 
 //POST A NEW CLOCK==================================================================================
